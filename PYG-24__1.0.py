@@ -8,6 +8,37 @@
 from tkinter import *
 import tkinter as tk 
 from tkinter import filedialog
+import datetime, time
+
+
+def clock_in():
+    global s
+    s = time.localtime()
+    current_time = time.strftime("%H:%M:%S", s)
+    tk.Label(root, text = f"{current_time}").grid(row=2,column=1)
+    
+def clock_out():
+    global f
+    f = time.localtime()
+    current_time = time.strftime("%H:%M:%S", f)
+    tk.Label(root, text = f"{current_time}").grid(row=3,column=1)
+    
+def time_worth():
+    global elapsed_time,hours,minutes,seconds
+    elapsed_time = time.mktime(f) - time.mktime(s)
+    hours = elapsed_time//3600
+    remainder = elapsed_time % 3600
+    minutes = remainder// 60
+    seconds = remainder % 60
+    time_display = Label(root, text = f'{hours} Hours {minutes} Minutes {seconds} Seconds').grid(row = 4,column = 1)
+    
+    return hours,minutes,seconds
+
+def money_worth():
+    global salary
+    rate = float(hourly_rate.get())
+    salary = round((rate/3600) * elapsed_time,2) 
+    results = Label(root, text = "Week's Pay: $%.2f" % salary).grid(row=6, column=1)
 
 
 #These lines of code generate the GUI from tkinter
